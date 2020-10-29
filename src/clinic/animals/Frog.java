@@ -22,6 +22,11 @@ public class Frog extends Animal {
     }
     
     @Override
+    public void voice() {
+        System.out.println("Ква-ква!!!");
+    }
+    
+    @Override
     public String toString(){
         return getName();
     }

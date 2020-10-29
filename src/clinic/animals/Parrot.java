@@ -21,6 +21,11 @@ public class Parrot extends Animal {
     }
     
     @Override
+    public void voice() {
+        System.out.println("Хозяин - хорррроший!");
+    }
+    
+    @Override
     public String toString(){
         return getName();
     }

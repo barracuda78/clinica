@@ -21,6 +21,8 @@ public abstract class Animal {
         isAlive = true;
     }
     
+    public abstract void voice();
+    
     public static void setCounter(AtomicInteger counter) {
         Animal.counter = counter;
     }
