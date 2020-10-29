@@ -5,7 +5,9 @@ import clinic.disease.Disease;
 
 
 public class Frog extends Animal {
-    
+    public static void run(){
+        System.out.println("лягушка прыгает");
+    }
     //constructors
     public Frog(boolean isMale, String name, int age) {
         super(isMale);

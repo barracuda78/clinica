@@ -4,7 +4,9 @@ import clinic.clients.Client;
 import clinic.disease.Disease;
 
 public class Horse extends Animal {
-    
+    public static void run(){
+        System.out.println("лошадь бежит");
+    }
     //constructors
     public Horse(boolean isMale, String name, int age) {
         super(isMale);

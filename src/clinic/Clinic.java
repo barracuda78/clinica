@@ -2,6 +2,10 @@ package clinic;
 
 import clinic.animals.Animal;
 import clinic.animals.Cat;
+import clinic.animals.Fox;
+import clinic.animals.Frog;
+import clinic.animals.Hamster;
+import clinic.animals.Horse;
 import clinic.animals.Parrot;
 import clinic.clients.Client;
 import clinic.disease.Disease;
@@ -12,6 +16,7 @@ import clinic.staff.Nurse;
 import clinic.treating.Treating;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +26,37 @@ public class Clinic {
     @Override
     public String toString(){
         return brand;
+    }
+    
+    private static Animal[] generatePatients(int size){
+        Animal[] patients = new Animal[size];
+        Random random = new Random();
+        
+        for (int i = 0; i < patients.length; i++) {
+            int typeNumber = random.nextInt(6);
+            switch(typeNumber){
+                case 0:
+                    //boolean isMale, String name, int age
+                    patients[i] = new Cat(true, "Мурзик" + typeNumber, typeNumber*(31/29));
+                    break;
+                case 1:
+                    patients[i] = new Fox(false, "Лиса Алиса" + typeNumber, typeNumber*(31/29));
+                    break;
+                case 2:
+                    patients[i] = new Frog(false, "Царевна" + typeNumber, typeNumber*(31/29));
+                    break;    
+                case 3:
+                    patients[i] = new Hamster(true, "Хома" + typeNumber, typeNumber*(31/29));
+                    break;
+                case 4:
+                    patients[i] = new Horse(true, "Сивка" + typeNumber, typeNumber*(31/29));
+                    break; 
+                case 5:
+                    patients[i] = new Parrot(true, "Гриша" + typeNumber, typeNumber*(31/29));
+                    break;       
+            }   
+        }
+        return patients; 
     }
     
     public static void main(String[] args) {
@@ -65,6 +101,14 @@ public class Clinic {
         }
         
         System.out.println("массив animals после привязки: " + Arrays.toString(doctor01.getAnimals()));
+        
+           Animal[] animals = doctor01.getAnimals();
+           
+           for(Animal a: animals){
+               a.voice();
+               a.run();
+           }
+           
     }
 }
  

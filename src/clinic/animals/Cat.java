@@ -1,10 +1,10 @@
 package clinic.animals;
 
-import clinic.clients.Client;
-import clinic.disease.Disease;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Cat extends Animal {
+
+    public static void run(){
+        System.out.println("кот бежит");
+    }
     
     //constructors
     public Cat(boolean isMale, String name, int age) {

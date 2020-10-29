@@ -6,6 +6,10 @@ import clinic.disease.Disease;
 
 public class Fox extends Animal {
     
+    public static void run(){
+        System.out.println("лиса бежит");
+    }
+        
     //constructors
     public Fox(boolean isMale, String name, int age) {
         super(isMale);
