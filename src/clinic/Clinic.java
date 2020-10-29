@@ -22,10 +22,37 @@ import java.util.logging.Logger;
 
 public class Clinic {
     private String brand;
-    
+
     @Override
     public String toString(){
         return brand;
+    }
+    
+    private static Disease generateDisease(int category){
+        
+        Random random = new Random();
+        int typeNumber = random.nextInt(5);
+        System.out.println("random.nextInt(5) = " + typeNumber);
+        switch(typeNumber){
+            case 0:
+                //int category, String name, double temperature
+                return new Disease(category, "Covid19", random.nextDouble());
+                
+            case 1:
+                return new Disease(category, "Коклюш", random.nextDouble());
+                
+            case 2:
+                return new Disease(category, "Холера", random.nextDouble());
+
+            case 3:
+                return new Disease(category, "Чума", random.nextDouble());
+               
+            case 4:
+                return null;
+
+        }
+        
+        return null;
     }
     
     private static Animal[] generatePatients(int size){
@@ -37,22 +64,40 @@ public class Clinic {
             switch(typeNumber){
                 case 0:
                     //boolean isMale, String name, int age
-                    patients[i] = new Cat(true, "Мурзик" + typeNumber, typeNumber*(31/29));
+                    Random random1 = new Random();
+                    Cat cat = new Cat(true, "Мурзик" + random1.nextInt(10), typeNumber*(31/29));
+                    cat.setDisease(generateDisease(1));
+                    patients[i] = cat;
                     break;
                 case 1:
-                    patients[i] = new Fox(false, "Лиса Алиса" + typeNumber, typeNumber*(31/29));
+                    Random random2 = new Random();
+                    Fox fox = new Fox(false, "Лиса Алиса" + random2.nextInt(10), typeNumber*(31/29));
+                    fox.setDisease(generateDisease(2));
+                    patients[i] = fox;
                     break;
                 case 2:
-                    patients[i] = new Frog(false, "Царевна" + typeNumber, typeNumber*(31/29));
+                    Random random3 = new Random();
+                    Frog frog = new Frog(false, "Царевна" + random3.nextInt(10), typeNumber*(31/29));
+                    frog.setDisease(generateDisease(1));
+                    patients[i] = frog;
                     break;    
                 case 3:
-                    patients[i] = new Hamster(true, "Хома" + typeNumber, typeNumber*(31/29));
+                    Random random4 = new Random();
+                    Hamster hamster = new Hamster(true, "Хома" + random4.nextInt(10), typeNumber*(31/29));
+                    hamster.setDisease(generateDisease(2));
+                    patients[i] = hamster;
                     break;
                 case 4:
-                    patients[i] = new Horse(true, "Сивка" + typeNumber, typeNumber*(31/29));
+                    Random random5 = new Random();
+                    Horse horse = new Horse(true, "Сивка" + random5.nextInt(10), typeNumber*(31/29));
+                    horse.setDisease(generateDisease(2));
+                    patients[i] = horse;
                     break; 
                 case 5:
-                    patients[i] = new Parrot(true, "Гриша" + typeNumber, typeNumber*(31/29));
+                    Random random6 = new Random();
+                    Parrot parrot = new Parrot(true, "Гриша" + random6.nextInt(10), typeNumber*(31/29));
+                    parrot.setDisease(generateDisease(2));
+                    patients[i] = parrot;
                     break;       
             }   
         }
@@ -102,13 +147,21 @@ public class Clinic {
         
         System.out.println("массив animals после привязки: " + Arrays.toString(doctor01.getAnimals()));
         
-           Animal[] animals = doctor01.getAnimals();
+        Animal[] animals = doctor01.getAnimals();
            
-           for(Animal a: animals){
-               a.voice();
-               a.run();
-           }
-           
+        for(Animal a: animals){
+            a.voice();
+            a.run();
+        }
+          
+        Animal[] patients = generatePatients(6);
+        
+        for(Animal a : patients){
+            System.out.println("пациент: " + a);
+            System.out.println(a.getDisease());
+        }
+        
+
     }
 }
  
