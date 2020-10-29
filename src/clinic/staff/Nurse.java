@@ -1,22 +1,13 @@
 package clinic.staff;
 
-public class Nurse {
-    private String name;
+public class Nurse extends Staff {
     private int age;
     private Doctor doctor;
 
-    public Nurse(String name, int age, Doctor doctor) {
-        this.name = name;
+    public Nurse(String name, int age) {
+        super(name);
         this.age = age;
         this.doctor = doctor;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getAge() {
@@ -37,7 +28,7 @@ public class Nurse {
     
     @Override
     public String toString(){
-        return "Nurse: " + name;
+        return "Nurse: " + getName();
     }
     
 }

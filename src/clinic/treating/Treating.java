@@ -28,10 +28,10 @@ public class Treating {
         
         if (animal instanceof Cat){
             Cat cat = (Cat)animal;
-            Cat[] cats = doctor.getCats();
+            Animal[] animals = doctor.getAnimals();
             try{
-                assigner(cats, cat);
-                doctor.setCats(cats);
+                assigner(animals, cat);
+                doctor.setAnimals(animals);
             }catch(DoctorIsBusyException e){
                 System.out.println(e.getMessage());
                 System.out.println("Кот/кошка не может быть добавлен/а к этому доктору: доктор занят.");
@@ -41,10 +41,10 @@ public class Treating {
             
         }else if(animal instanceof Hamster){
             Hamster hamster = (Hamster)animal;
-            Hamster[] hamsters = doctor.getHamsters();
+            Animal[] animals  = doctor.getAnimals();
             try{
-                assigner(hamsters, hamster);
-                doctor.setHamsters(hamsters);
+                assigner(animals, hamster);
+                doctor.setAnimals(animals);
             }catch(DoctorIsBusyException e){
                 System.out.println(e.getMessage());
                 System.out.println("Хомяк не может быть добавлен к этому доктору: доктор занят.");
@@ -54,10 +54,10 @@ public class Treating {
             
         }else if(animal instanceof Parrot){
             Parrot parrot = (Parrot)animal;
-            Parrot[] parrots = doctor.getParrots();
+            Animal[] animals = doctor.getAnimals();
             try{
-                assigner(parrots, parrot);
-                doctor.setParrots(parrots);
+                assigner(animals, parrot);
+                doctor.setAnimals(animals);
             }catch(DoctorIsBusyException e){
                 System.out.println(e.getMessage());
                 System.out.println("Попугай не может быть добавлен к этому доктору: доктор занят.");
