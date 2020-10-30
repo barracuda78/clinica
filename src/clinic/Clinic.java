@@ -10,17 +10,98 @@ import clinic.animals.Parrot;
 import clinic.clients.Client;
 import clinic.disease.Disease;
 import clinic.exceptions.DoctorIsBusyException;
+
 import clinic.staff.Doctor;
 import clinic.staff.Nurse;
 import clinic.treating.Treating;
+
 import java.util.Arrays;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Clinic {
     private String brand;
-    
+
     @Override
     public String toString(){
         return brand;
+    }
+    
+    private static Disease generateDisease(int category){
+        
+        Random random = new Random();
+        int typeNumber = random.nextInt(5);
+        System.out.println("random.nextInt(5) = " + typeNumber);
+        switch(typeNumber){
+            case 0:
+                //int category, String name, double temperature
+                return new Disease(category, "Covid19", random.nextDouble());
+                
+            case 1:
+                return new Disease(category, "Коклюш", random.nextDouble());
+                
+            case 2:
+                return new Disease(category, "Холера", random.nextDouble());
+
+            case 3:
+                return new Disease(category, "Чума", random.nextDouble());
+               
+            case 4:
+                return null;
+
+        }
+        
+        return null;
+    }
+    
+    private static Animal[] generatePatients(int size){
+        Animal[] patients = new Animal[size];
+        Random random = new Random();
+        
+        for (int i = 0; i < patients.length; i++) {
+            int typeNumber = random.nextInt(6);
+            switch(typeNumber){
+                case 0:
+                    //boolean isMale, String name, int age
+                    Random random1 = new Random();
+                    Cat cat = new Cat(true, "Мурзик" + random1.nextInt(10), typeNumber*(31/29));
+                    cat.setDisease(generateDisease(1));
+                    patients[i] = cat;
+                    break;
+                case 1:
+                    Random random2 = new Random();
+                    Fox fox = new Fox(false, "Лиса Алиса" + random2.nextInt(10), typeNumber*(31/29));
+                    fox.setDisease(generateDisease(2));
+                    patients[i] = fox;
+                    break;
+                case 2:
+                    Random random3 = new Random();
+                    Frog frog = new Frog(false, "Царевна" + random3.nextInt(10), typeNumber*(31/29));
+                    frog.setDisease(generateDisease(1));
+                    patients[i] = frog;
+                    break;    
+                case 3:
+                    Random random4 = new Random();
+                    Hamster hamster = new Hamster(true, "Хома" + random4.nextInt(10), typeNumber*(31/29));
+                    hamster.setDisease(generateDisease(2));
+                    patients[i] = hamster;
+                    break;
+                case 4:
+                    Random random5 = new Random();
+                    Horse horse = new Horse(true, "Сивка" + random5.nextInt(10), typeNumber*(31/29));
+                    horse.setDisease(generateDisease(2));
+                    patients[i] = horse;
+                    break; 
+                case 5:
+                    Random random6 = new Random();
+                    Parrot parrot = new Parrot(true, "Гриша" + random6.nextInt(10), typeNumber*(31/29));
+                    parrot.setDisease(generateDisease(2));
+                    patients[i] = parrot;
+                    break;       
+            }   
+        }
+        return patients; 
     }
     
     public static void main(String[] args) {
@@ -34,58 +115,53 @@ public class Clinic {
         Disease angina = new Disease(2, "ангина", 38.5);
         Disease gripp = new Disease(2, "грипп", 37.9);
         
-        Cat cat01 = new Cat("Murzik", 5, 3.0, mikeTyson, true, covid19);
-        Cat cat02 = new Cat("Barsik", 2, 2.5, mikkieRurk, true, angina);
-        Cat cat03 = new Cat("Bazilio", 65, 70.5, alisa, true, gripp);
-        Cat cat04 = new Cat("Vaska", 4, 2.9, mikkieRurk, true, covid19);
-        
-        //String name, int age
-        Hamster hamster01 = new Hamster("Homa", 2);
+        Cat cat01 = new Cat(true, "Murzik", 5);
+        Cat cat02 = new Cat(true, "Barsik", 2);
+        Cat cat03 = new Cat(true, "Bazilio", 65);
+        Cat cat04 = new Cat(true, "Vaska", 4);
         
         //boolean isMale
         Parrot unknownParrot = new Parrot(false);
-        
-        //boolean isMale, boolean isAlive
-        Fox fox01 = new Fox(true, true);       
-        Frog frog01 = new Frog("Царевна", "green");
-        //String name, int age, Client owner, Disease disease
-        Horse horse01 = new Horse("Stallion", 8, mikeTyson, gripp);
+       
         
         Doctor doctor01 = new Doctor("Преображенский");
-        
-        doctor01.setCats(new Cat[50]);
-        Cat[] cats = doctor01.getCats();
-        cats[0] = cat01;
-        cats[1] = cat02;
-        cats[2] = cat03;
-        System.out.println("массив котов: " + Arrays.toString(cats));
-        doctor01.setCats(cats);
-        
-        doctor01.setHamsters(new Hamster[]{hamster01});
-        doctor01.setParrots(new Parrot[]{unknownParrot});
         doctor01.setAnimals(new Animal[4]);
-        
-        //String name, int age, Doctor doctor
-        Nurse nurse = new Nurse("Eva", 44, doctor01);
+                
+        Nurse nurse = new Nurse("Eva", 44);
         
         //проверка статического метода: добавление в поле типа Animal[]:
         System.out.println("массив animals до привязки: " + Arrays.toString(doctor01.getAnimals()));
-        try{
-        Treating.assignToDoctor(horse01, doctor01);
-        }
-        catch(DoctorIsBusyException e){
+        
+        Treating treating01 = new Treating(doctor01);
+        
+        treating01.assignToDoctor(cat01);
+        treating01.assignToDoctor(cat02);
+        treating01.assignToDoctor(cat03);
+        
+        try {
+            Treating.assignToDoctor(cat04, doctor01);
+        } catch (DoctorIsBusyException e) {
             e.printStackTrace();
             System.out.println("Невозможно привязать животное к доктору");
         }
-        System.out.println("привязана ли лошадь: ");
-        System.out.println("теперь массив animals: " + Arrays.toString(doctor01.getAnimals()));
         
-        //проверка нестатического метода:
-        boolean isAssigned = new Treating(doctor01).assignToDoctor(cat04);
-        System.out.println("привязан ли cat04: " + isAssigned);
-        System.out.println("теперь массив котов: " + Arrays.toString(doctor01.getCats()));
+        System.out.println("массив animals после привязки: " + Arrays.toString(doctor01.getAnimals()));
         
-        System.out.println("Подсчитаем животных: " + Animal.getCounter());
+        Animal[] animals = doctor01.getAnimals();
+           
+        for(Animal a: animals){
+            a.voice();
+            a.run();
+        }
+          
+        Animal[] patients = generatePatients(6);
+        
+        for(Animal a : patients){
+            System.out.println("пациент: " + a);
+            System.out.println(a.getDisease());
+        }
+        
+
     }
 }
  
