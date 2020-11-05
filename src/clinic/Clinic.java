@@ -198,60 +198,54 @@ public class Clinic {
 //
 //        }
         
-        /////////////////
-//        System.out.println("\nВыведем в сгенерированном списке пациентов только болеющих водоплавающих:\n");
-//        for(Animal a: generatePatients(20)){
-//            if(a instanceof Fish && a.isIll()){
-//                Fish fish = (Fish)a;
-//                System.out.println(fish.getFinsCount());
-//            }else{
-//                System.out.println(a.getName());
-//            }
-//        }
+        //////////////////05 ноября 2020: Задание 1//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nВыведем в сгенерированном списке пациентов только болеющих водоплавающих:\n");
+        //1. Итерируемся по списку из 20 пациентов, который генерируем внутри цикла foreach:
+        for(Animal a: generatePatients(20)){
+            if(a instanceof Fish && a.isIll()){             //---> если a (т.е. пациент) - является сущностью рыбы И a - болен,
+                Fish fish = (Fish)a;                        //---> создаем новую ссылку типа Fish и приводим к (Fish) наше животное "a" из списка, записывая его в переменную Fish fish.
+                System.out.println(fish.getFinsCount());    //---> выводим в консоль количество плавников этой Fish fish.
+            }else{                                          //---> иначе (не instanceof Fish ИЛИ не isIll(),
+                System.out.println(a.getName());            //---> выводим в консоль имя животного.
+            }
+        }
         
-        ////////////////////
+        //////////////////05 ноября 2020: Задание 3//////////////////////////////////////////////////////////////////////////////////////////////////////////////
         System.out.println("\nВыведем в сгенерированном списке Speakable пациентов с каждой болезнью:\n");
         
+        //1. Сгенерировать список пациентов с привязанными к ним болезнями:
         Animal[] animalsArray = generatePatients(20);
-        
-        Map<Disease, Integer> map = new HashMap();
-        
-        //создать и заполнить массив болезней:
+
+        //2. Создать новый массив болезней (размером с массив животных):
         Disease[] diseases = new Disease[animalsArray.length];
+        
+        //3. Заполнить массив болезней болезнями животных из массива 1 (чтобы болезни не повторялись):
         for(int i = 0; i < animalsArray.length; i++){
-            if(animalsArray[i] instanceof Speakable){
-                if(animalsArray[i].getDisease() != null){
-                    if(!Arrays.asList(diseases).contains(animalsArray[i].getDisease())){
-                          diseases[i] = animalsArray[i].getDisease();
+            if(animalsArray[i] instanceof Speakable){                                       //---> Если элемент массива реализует интерфейс Speakable
+                if(animalsArray[i].getDisease() != null){                                   //---> Если болезнь не равна null
+                    if(!Arrays.asList(diseases).contains(animalsArray[i].getDisease())){    //---> Если массив diseases еще не содержит болезнь данного живтоного (массив diseases привожу к ArrayList чтобы использовать метод contains() иначе долго самому проверять еще в одном цикле):
+                          diseases[i] = animalsArray[i].getDisease();                       //---> То записываем болезнь этого животного в яччейку массива i.
                     }
                 }
-                
             }
-            
         }
         
-        //итерироваться по массиву болезней. Считать количество заболевших:
+        //4. Итерироваться в цикле foreach по массиву болезней. Считать количество заболевших:
         for(Disease disease : diseases){
-            int counter = 0;
-            if(disease != null){
-                
-                for(int i = 0; i < animalsArray.length; i++){
-                    if(animalsArray[i] instanceof Speakable){
-                        if(disease.equals(animalsArray[i].getDisease())){
-                            counter++;
+            int counter = 0;                                                                //---> Создать счетчик животных с конкретной болезнью.
+            if(disease != null){                                                            //---> Проверить, не является ли болезь == null (массив болезней в п.3 заполнен с "дырками" null.
+                for(int i = 0; i < animalsArray.length; i++){                               //---> Внутренним циклом пробегаться по массиву животных из п. 1.
+                    if(animalsArray[i] instanceof Speakable){                               //---> Если животное реализует Speakable (а они не все его реализуют в этом списке: там могут быть рыбы)
+                        if(disease.equals(animalsArray[i].getDisease())){                   //---> Если болезнь из внешнего цикла совпадает с болезнью данного животного (equals() тут работает, т.к. он переопределен в классе Disease)
+                            counter++;                                                      //---> То инкрементируем счетчик.
                         }
                     }
-                   
                 }
+                
+                System.out.println(disease.getName() + " : " + counter);                    //Во внешнем цикле выводим данную болезнь и значение счетчика в консоль.
+                counter = 0;                                                                //Сбрасываем счетчик, чтобы заболевших следующей болезнью считать с нуля.
             }
-            if(disease != null){
-                System.out.println(disease.getName() + " : " + counter);
-                counter = 0;
-            }
-
         }
-        
-        
     }
 }
  
