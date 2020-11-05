@@ -7,6 +7,7 @@ import clinic.animals.Frog;
 import clinic.animals.Hamster;
 import clinic.animals.Horse;
 import clinic.animals.Parrot;
+import clinic.animals.fishes.Guppy;
 import clinic.clients.Client;
 import clinic.disease.Disease;
 import clinic.exceptions.DoctorIsBusyException;
@@ -17,8 +18,6 @@ import clinic.treating.Treating;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Clinic {
     private String brand;
@@ -119,10 +118,15 @@ public class Clinic {
         Cat cat02 = new Cat(true, "Barsik", 2);
         Cat cat03 = new Cat(true, "Bazilio", 65);
         Cat cat04 = new Cat(true, "Vaska", 4);
-        
-        //boolean isMale
+
         Parrot unknownParrot = new Parrot(false);
-       
+        
+        Guppy guppy01 = new Guppy(false, 4);
+        guppy01.setName("Глупышка Гуппи");
+        
+        Guppy guppy02 = new Guppy(true, 4);
+        guppy02.setName("Умняшка Гуппи");
+        
         
         Doctor doctor01 = new Doctor("Преображенский");
         doctor01.setAnimals(new Animal[4]);
@@ -157,11 +161,14 @@ public class Clinic {
         Animal[] patients = generatePatients(6);
         
         for(Animal a : patients){
-            System.out.println("пациент: " + a);
-            System.out.println(a.getDisease());
-        }
-        
+            if(!a.isIll()){
+                System.out.println("пациент: " + a + " здоров!");
+            }
+            else{
+                System.out.println("пациент: " + a + " болен: " + a.getDisease());
+            }
 
+        }
     }
 }
  
