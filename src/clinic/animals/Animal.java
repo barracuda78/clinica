@@ -4,7 +4,7 @@ import clinic.clients.Client;
 import clinic.disease.Disease;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class Animal {
+public abstract class Animal implements Speakable {
     private static AtomicInteger counter = new AtomicInteger(0);
 
     

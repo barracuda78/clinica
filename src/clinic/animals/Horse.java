@@ -3,7 +3,7 @@ package clinic.animals;
 import clinic.clients.Client;
 import clinic.disease.Disease;
 
-public class Horse extends Animal {
+public class Horse extends Animal{
     public static void run(){
         System.out.println("лошадь бежит");
     }
