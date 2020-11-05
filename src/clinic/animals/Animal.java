@@ -4,12 +4,9 @@ import clinic.clients.Client;
 import clinic.disease.Disease;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class Animal {
+public abstract class Animal implements Speakable {
     private static AtomicInteger counter = new AtomicInteger(0);
-    
-    public static void run(){
-        System.out.println("Бегают бегом");
-    }
+
     
     private int id;
     private String name;
@@ -31,6 +28,9 @@ public abstract class Animal {
         return disease!=null;
     }
     
+    public static void run(){
+        System.out.println("Бегают бегом");
+    }
     //////////setters////////////////////////////////////
     
     public static void setCounter(AtomicInteger counter) {

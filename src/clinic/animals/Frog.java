@@ -4,7 +4,7 @@ import clinic.clients.Client;
 import clinic.disease.Disease;
 
 
-public class Frog extends Animal {
+public class Frog extends Animal implements Swimmable{
     public static void run(){
         System.out.println("лягушка прыгает");
     }

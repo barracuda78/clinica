@@ -7,6 +7,12 @@ import clinic.animals.Frog;
 import clinic.animals.Hamster;
 import clinic.animals.Horse;
 import clinic.animals.Parrot;
+import clinic.animals.Speakable;
+import clinic.animals.Swimmable;
+import clinic.animals.fishes.Fish;
+import clinic.animals.fishes.Goldfish;
+import clinic.animals.fishes.Guppy;
+import clinic.animals.fishes.Shark;
 import clinic.clients.Client;
 import clinic.disease.Disease;
 import clinic.exceptions.DoctorIsBusyException;
@@ -16,9 +22,9 @@ import clinic.staff.Nurse;
 import clinic.treating.Treating;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Clinic {
     private String brand;
@@ -32,7 +38,7 @@ public class Clinic {
         
         Random random = new Random();
         int typeNumber = random.nextInt(5);
-        System.out.println("random.nextInt(5) = " + typeNumber);
+        //System.out.println("random.nextInt(5) = " + typeNumber);
         switch(typeNumber){
             case 0:
                 //int category, String name, double temperature
@@ -60,7 +66,7 @@ public class Clinic {
         Random random = new Random();
         
         for (int i = 0; i < patients.length; i++) {
-            int typeNumber = random.nextInt(6);
+            int typeNumber = random.nextInt(9);
             switch(typeNumber){
                 case 0:
                     //boolean isMale, String name, int age
@@ -98,7 +104,28 @@ public class Clinic {
                     Parrot parrot = new Parrot(true, "Гриша" + random6.nextInt(10), typeNumber*(31/29));
                     parrot.setDisease(generateDisease(2));
                     patients[i] = parrot;
-                    break;       
+                    break;  
+                case 6:
+                    Random random7 = new Random();
+                    Guppy guppy = new Guppy(false, 5);
+                    guppy.setName("Глупышка гуппи");
+                    guppy.setDisease(generateDisease(2));
+                    patients[i] = guppy;
+                    break;
+                case 7:
+                    Random random8 = new Random();
+                    Goldfish goldfish = new Goldfish(false, 4);
+                    goldfish.setName("Золотая рыбка");
+                    goldfish.setDisease(generateDisease(2));
+                    patients[i] = goldfish;
+                    break; 
+                case 8:
+                    Random random9 = new Random();
+                    Shark shark = new Shark(false, 8);
+                    shark.setName("Акула-убийца");
+                    shark.setDisease(generateDisease(2));
+                    patients[i] = shark;
+                    break;                     
             }   
         }
         return patients; 
@@ -119,10 +146,15 @@ public class Clinic {
         Cat cat02 = new Cat(true, "Barsik", 2);
         Cat cat03 = new Cat(true, "Bazilio", 65);
         Cat cat04 = new Cat(true, "Vaska", 4);
-        
-        //boolean isMale
+
         Parrot unknownParrot = new Parrot(false);
-       
+        
+        Guppy guppy01 = new Guppy(false, 4);
+        guppy01.setName("Глупышка Гуппи");
+        
+        Guppy guppy02 = new Guppy(true, 4);
+        guppy02.setName("Умняшка Гуппи");
+        
         
         Doctor doctor01 = new Doctor("Преображенский");
         doctor01.setAnimals(new Animal[4]);
@@ -149,19 +181,71 @@ public class Clinic {
         
         Animal[] animals = doctor01.getAnimals();
            
-        for(Animal a: animals){
-            a.voice();
-            a.run();
-        }
+//        for(Animal a: animals){
+//            a.voice();
+//            a.run();
+//        }
           
-        Animal[] patients = generatePatients(6);
+//        Animal[] patients = generatePatients(6);
+//        
+//        for(Animal a : patients){
+//            if(!a.isIll()){
+//                System.out.println("пациент: " + a + " здоров!");
+//            }
+//            else{
+//                System.out.println("пациент: " + a + " болен: " + a.getDisease());
+//            }
+//
+//        }
         
-        for(Animal a : patients){
-            System.out.println("пациент: " + a);
-            System.out.println(a.getDisease());
+        //////////////////05 ноября 2020: Задание 1//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nВыведем в сгенерированном списке пациентов только болеющих водоплавающих:\n");
+        //1. Итерируемся по списку из 20 пациентов, который генерируем внутри цикла foreach:
+        for(Animal a: generatePatients(20)){
+            if(a instanceof Fish && a.isIll()){             //---> если a (т.е. пациент) - является сущностью рыбы И a - болен,
+                Fish fish = (Fish)a;                        //---> создаем новую ссылку типа Fish и приводим к (Fish) наше животное "a" из списка, записывая его в переменную Fish fish.
+                System.out.println(fish.getFinsCount());    //---> выводим в консоль количество плавников этой Fish fish.
+            }else{                                          //---> иначе (не instanceof Fish ИЛИ не isIll(),
+                System.out.println(a.getName());            //---> выводим в консоль имя животного.
+            }
         }
         
+        //////////////////05 ноября 2020: Задание 3//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nВыведем в сгенерированном списке Speakable пациентов с каждой болезнью:\n");
+        
+        //1. Сгенерировать список пациентов с привязанными к ним болезнями:
+        Animal[] animalsArray = generatePatients(20);
 
+        //2. Создать новый массив болезней (размером с массив животных):
+        Disease[] diseases = new Disease[animalsArray.length];
+        
+        //3. Заполнить массив болезней болезнями животных из массива 1 (чтобы болезни не повторялись):
+        for(int i = 0; i < animalsArray.length; i++){
+            if(animalsArray[i] instanceof Speakable){                                       //---> Если элемент массива реализует интерфейс Speakable
+                if(animalsArray[i].getDisease() != null){                                   //---> Если болезнь не равна null
+                    if(!Arrays.asList(diseases).contains(animalsArray[i].getDisease())){    //---> Если массив diseases еще не содержит болезнь данного живтоного (массив diseases привожу к ArrayList чтобы использовать метод contains() иначе долго самому проверять еще в одном цикле):
+                          diseases[i] = animalsArray[i].getDisease();                       //---> То записываем болезнь этого животного в яччейку массива i.
+                    }
+                }
+            }
+        }
+        
+        //4. Итерироваться в цикле foreach по массиву болезней. Считать количество заболевших:
+        for(Disease disease : diseases){
+            int counter = 0;                                                                //---> Создать счетчик животных с конкретной болезнью.
+            if(disease != null){                                                            //---> Проверить, не является ли болезь == null (массив болезней в п.3 заполнен с "дырками" null.
+                for(int i = 0; i < animalsArray.length; i++){                               //---> Внутренним циклом пробегаться по массиву животных из п. 1.
+                    if(animalsArray[i] instanceof Speakable){                               //---> Если животное реализует Speakable (а они не все его реализуют в этом списке: там могут быть рыбы)
+                        if(disease.equals(animalsArray[i].getDisease())){                   //---> Если болезнь из внешнего цикла совпадает с болезнью данного животного (equals() тут работает, т.к. он переопределен в классе Disease)
+                            counter++;                                                      //---> То инкрементируем счетчик.
+                        }
+                    }
+                }
+                
+                System.out.println(disease.getName() + " : " + counter);                    //Во внешнем цикле выводим данную болезнь и значение счетчика в консоль.
+                counter = 0;                                                                //Сбрасываем счетчик, чтобы заболевших следующей болезнью считать с нуля.
+            }
+        }
     }
 }
  
