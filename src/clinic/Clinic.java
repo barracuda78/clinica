@@ -130,6 +130,19 @@ public class Clinic {
         }
         return patients; 
     }
+
+    private static void generateSomeException(Animal[] animals){
+        try{
+            //System.exit(0);
+            System.out.println(animals[5]);
+        }catch(ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }finally{
+            System.out.println("finally block");
+        }
+    }
+    
+    
     
     public static void main(String[] args) {
         //String name, int age, double weight, Client owner, boolean isMale, Disease disease
@@ -244,6 +257,9 @@ public class Clinic {
                 System.out.println(disease.getName() + " : " + counter);                    //Во внешнем цикле выводим данную болезнь и значение счетчика в консоль.
             }
         }
+
+        //////////////////10 ноября 2020: Exceptions//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        generateSomeException(new Animal[3]);
     }
 }
  
