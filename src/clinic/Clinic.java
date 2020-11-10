@@ -20,6 +20,7 @@ import clinic.exceptions.DoctorIsBusyException;
 import clinic.staff.Doctor;
 import clinic.staff.Nurse;
 import clinic.treating.Treating;
+import clinic.treating.TreatingMethods;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -260,7 +261,13 @@ public class Clinic {
         }
 
         //////////////////10 ноября 2020: Exceptions//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        generateSomeException(new Animal[3]);
+        //generateSomeException(new Animal[3]);
+        
+        //////////////////10 ноября 2020: ENUM//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\n====================ENUM======================\n");
+        Cat tom = new Cat(true);
+        tom.setTreatingMethod(TreatingMethods.CREMATION);
+        
     }
 }
  

@@ -2,12 +2,13 @@ package clinic.animals;
 
 import clinic.clients.Client;
 import clinic.disease.Disease;
+import clinic.treating.TreatingMethods;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Animal implements Speakable {
     private static AtomicInteger counter = new AtomicInteger(0);
 
-    
+    private TreatingMethods treatingMethod;
     private int id;
     private String name;
     private int age;
@@ -103,6 +104,14 @@ public abstract class Animal implements Speakable {
 
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
+    }
+
+    public TreatingMethods getTreatingMethod() {
+        return treatingMethod;
+    }
+
+    public void setTreatingMethod(TreatingMethods treatingMethod) {
+        this.treatingMethod = treatingMethod;
     }
     
     
