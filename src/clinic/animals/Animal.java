@@ -5,11 +5,11 @@ import clinic.disease.Disease;
 import clinic.treating.TreatingMethods;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class Animal implements Speakable {
+public abstract class Animal implements Speakable, Comparable<Animal> {
     private static AtomicInteger counter = new AtomicInteger(0);
 
     private TreatingMethods treatingMethod;
-    private int id;
+    private int id = 0;
     private String name;
     private int age;
     private double weight;
@@ -21,6 +21,8 @@ public abstract class Animal implements Speakable {
     public Animal(boolean isMale){
         counter.incrementAndGet();
         isAlive = true;
+        this.isMale = isMale;
+        id +=1;
     }
     
     public abstract void voice();
@@ -113,7 +115,16 @@ public abstract class Animal implements Speakable {
     public void setTreatingMethod(TreatingMethods treatingMethod) {
         this.treatingMethod = treatingMethod;
     }
-    
-    
-    
+
+    @Override
+    public int compareTo(Animal t) {
+        if(isIsMale() && t.isIsMale() || !isIsMale() && !t.isIsMale())
+            return 0;
+        else if (isIsMale() && !t.isIsMale() ){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+
 }

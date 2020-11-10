@@ -9,6 +9,7 @@ import clinic.animals.Horse;
 import clinic.animals.Parrot;
 import clinic.animals.Speakable;
 import clinic.animals.Swimmable;
+import clinic.animals.comparators.IdComparator;
 import clinic.animals.fishes.Fish;
 import clinic.animals.fishes.Goldfish;
 import clinic.animals.fishes.Guppy;
@@ -268,6 +269,14 @@ public class Clinic {
         Cat tom = new Cat(true);
         tom.setTreatingMethod(TreatingMethods.CREMATION);
         
+        //////////////////10 ноября 2020: COMPARABLE//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\n====================COMPARABLE======================\n");
+        Animal[] animalsArray2 = generatePatients(8);
+        System.out.println("Не отсортированный массив:           " + Arrays.toString(animalsArray2));
+        Arrays.sort(animalsArray2);
+        System.out.println("Отсортированный массив:              " + Arrays.toString(animalsArray2));
+        Arrays.sort(animalsArray2, new IdComparator());
+        System.out.println("Отсортированный компаратором массив: " + Arrays.toString(animalsArray2));
     }
 }
  
