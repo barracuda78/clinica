@@ -216,6 +216,7 @@ public class Clinic {
         //1. Итерируемся по списку из 20 пациентов, который генерируем внутри цикла foreach:
         for(Animal a: generatePatients(20)){
             if(a instanceof Fish && a.isIll()){             //---> если a (т.е. пациент) - является сущностью рыбы И a - болен,
+
                 Fish fish = (Fish)a;                        //---> создаем новую ссылку типа Fish и приводим к (Fish) наше животное "a" из списка, записывая его в переменную Fish fish.
                 System.out.println(fish.getFinsCount());    //---> выводим в консоль количество плавников этой Fish fish.
             }else{                                          //---> иначе (не instanceof Fish ИЛИ не isIll(),
